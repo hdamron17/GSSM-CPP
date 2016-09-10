@@ -70,4 +70,7 @@ int main(int argc, char** argv) {
     for(string item : tokenized) {
         cout << item << " | "; 
     } cout << endl;
+    
+    gradebook* test = new gradebook();
+    bool randbool = test->term();
 }

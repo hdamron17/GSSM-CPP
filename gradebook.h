@@ -16,7 +16,7 @@ using namespace std;
 
 class student {
 public:
-    student(string, string); //Constructor with first and last name
+    explicit student(string, string); //Constructor with first and last name
     virtual ~student(); //Default destructor
     string get_name() const; //Gets full student name
     string get_first_name() const; //Gets first name
@@ -42,7 +42,7 @@ private:
 
 class section {
 public:
-    section(string); //Constructor with class name
+    explicit section(string); //Constructor with class name
     virtual ~section(); //Default constructor
     void expell(string); //Deletes student at specified key
     vector<string> lookup(string) const; //Finds student names
@@ -70,12 +70,13 @@ private:
 
 class gradebook {
 public:
-    gradebook();
+    explicit gradebook();
     virtual ~gradebook();
     void parse(string); //parses and executes string command
     bool term() const; //returns true if it is ready to terminate looping
     static vector<string> tokenize(string); //tokenizes string; delimiter=" "
     static vector<string> tokenize(string, string); //tokenizes string
+    static string detokenize(vector<string>, int); //puts vector back together
     
 private:
     map<string, section> books;
