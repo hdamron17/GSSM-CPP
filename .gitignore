@@ -1,0 +1,8 @@
+*.mk
+*.bash
+*.properties
+*.inc
+
+private.xml
+project.xml
+configurations.xml
