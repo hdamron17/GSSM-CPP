@@ -1,0 +1,45 @@
+help
+	select
+	delete
+	add
+	change
+	lookup
+	quit
+select
+	section [options] - <section name>
+	student [options] - <student name>
+		-sect <section name>
+delete
+	section [options] - <section name>
+		-a {all sections (everything in book)}
+	student [options] - <student name>
+		-sect <section name>
+		-a {all in selected section}
+	grade [options] - <grade key>
+		-sect <section name>
+		-stu <student name>
+		-a {all in selected section and student}
+add
+	section [options] - <section name>
+	student [options] - <student name>
+		-sect <section name>
+	grade [options] - 
+change
+	grade [options] - <grade key>
+		-sect <section name>
+		-stu <student name>
+lookup
+	section [options] - <keyword>
+	student [options] - <keyword>
+		-sect <section name>
+display
+	portfolio [options] [- <student name>]   {displays all grades for single student}
+		-sect <section name>
+	sections   {lists sections}
+	students    {lists students in selected section}
+		-sect <section name>
+	grades [options] - <gradekey>   {displays single grade for all students}
+		-sect <section name>
+		-stu <student name>
+	section [- <section name>]   {displays everything about current section}
+quit
