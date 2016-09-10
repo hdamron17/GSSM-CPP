@@ -116,6 +116,11 @@ map<string, double> section::all_averages() const {
 }
 
 map<string, map<string, double> > section::display_all() const {
-    
+    map<string, map<string, double> > disp;
+    for(auto iter : students) {
+        student stu = iter.second;
+        disp[stu.get_name()] = stu.get_grades();
+    }
+    return disp;
 }
 

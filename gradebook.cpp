@@ -23,7 +23,25 @@ gradebook::~gradebook() {
 }
 
 void gradebook::parse(string line) {
+    vector<string> tokens = tokenize(line);
+//    switch(tokens[0])
+//        case "help":
+//            //TODO
+//            break;
+//        case "display":
+//            //TODO
+//            break;
+//        case "lookup":
+//            //TODO
+//            break;
+//        case "select":
+//            //TODO
+//            break;
+//        default:
+//            //TODO
+//            break;
     
+    // TODO Figure out switches with strings or use if else
 }
 
 bool gradebook::term() const {
@@ -31,26 +49,21 @@ bool gradebook::term() const {
 }
 
 vector<string> gradebook::tokenize(string str) {
-    string delimiter = " ";
+    return tokenize(str, " ");
+}
+
+vector<string> gradebook::tokenize(string str, string delimiter) {
     vector<string> tokens;
     int start = 0;
     int end = 0;
     while(end != string::npos) {
         end = str.find(delimiter, start);
-        tokens.push_back(str.substr(start, end));
-        start = end;
+        string sub = str.substr(start, end - start);
+        if(sub.size() > 0) {
+            tokens.push_back(sub);
+        }
+        start = end + delimiter.size();
     }
     return tokens;
 }
 
-vector<string> gradebook::tokenize(string str, string delimiter=" ") {
-    vector<string> tokens;
-    int start = 0;
-    int end = 0;
-    while(end != string::npos) {
-        end = str.find(delimiter, start);
-        tokens.push_back(str.substr(start, end));
-        start = end;
-    }
-    return tokens;
-}

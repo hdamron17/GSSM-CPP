@@ -74,7 +74,7 @@ public:
     virtual ~gradebook();
     void parse(string); //parses and executes string command
     bool term() const; //returns true if it is ready to terminate looping
-    static vector<string> tokenize(string); //tokenizes string
+    static vector<string> tokenize(string); //tokenizes string; delimiter=" "
     static vector<string> tokenize(string, string); //tokenizes string
     
 private:

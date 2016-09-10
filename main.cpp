@@ -66,6 +66,8 @@ int main(int argc, char** argv) {
     
     cout << "Brennan #2 has a " << sect.average("Brennan #2 Cain") << endl;
 
-    // vector<string> tokenized = gradebook::tokenize("I love beans");
-    //Above function does bad things...
+    vector<string> tokenized = gradebook::tokenize("I love beans");
+    for(string item : tokenized) {
+        cout << item << " | "; 
+    } cout << endl;
 }
