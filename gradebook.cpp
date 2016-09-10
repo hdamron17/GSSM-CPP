@@ -17,6 +17,18 @@ gradebook::gradebook() {
     select_book = "";
     select_student = "";
     terminate = false;
+    
+    HELP = 
+            "Gradebook, version 1.0\n" + 
+            "Usage:\n" +
+            "help   \t Displays this message\n"
+            "select \t Selects defaults\n"
+            "delete \t Deletes an attribute\n"
+            "add    \t Adds an attribute\n"
+            "change \t Changes an attribute\n"
+            "lookup \t Searches by keyword\n"
+            "display\t Displays gradebook\n"
+            "quit   \t Quits the program";
 }
 
 gradebook::~gradebook() {

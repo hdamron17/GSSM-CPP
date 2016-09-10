@@ -13,6 +13,7 @@
 using namespace std;
 
 section::section(string name) {
+    
 }
 
 section::~section() {
