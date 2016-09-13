@@ -43,7 +43,7 @@ map<string, double> section::display(string stu_name) const {
     }
 }
 
-double section::get_grade(string stu_name, string grade_key) {
+double section::get_grade(string stu_name, string grade_key) const {
     auto stu = students.find(stu_name);
     if(stu != students.end()) {
         return stu->second.get_grade(grade_key);

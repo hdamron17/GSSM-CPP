@@ -1,10 +1,4 @@
 help
-	select
-	delete
-	add
-	change
-	lookup
-	quit
 select
 	section [options] - <section name>
 	student [options] - <student name>
@@ -23,7 +17,7 @@ add
 	section [options] - <section name>
 	student [options] - <student name>
 		-sect <section name>
-	grade [options] - 
+	grade [options] - <grade key>
 change
 	grade [options] - <grade key>
 		-sect <section name>

@@ -73,4 +73,12 @@ int main(int argc, char** argv) {
     
     gradebook* test = new gradebook();
     bool randbool = test->term();
+    
+    gradebook mainbook();
+    cout << gradebook::WELCOME << endl << gradebook::PROMPT;
+    string command;
+    cin << command;
+    while(!mainbook.term()) {
+        
+    }
 }

@@ -30,7 +30,7 @@ string student::get_last_name() const {
     return last_name;
 }
 
-double student::get_grade(string key) {
+double student::get_grade(string key) const {
     auto grade = grades.find(key);
     if(grade != grades.end()) {
         return grade->second;
