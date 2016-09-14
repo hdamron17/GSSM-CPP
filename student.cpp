@@ -1,4 +1,5 @@
 /* 
+ * Student class: models a student with multiple grades stored in a map
  * File:   student.cpp
  * Author: hdamron1594
  * 

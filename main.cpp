@@ -1,4 +1,5 @@
 /* 
+ * Main function of Gradebook project: creates and modifies gradebook instance
  * File:   main.cpp
  * Author: hdamron1594
  *

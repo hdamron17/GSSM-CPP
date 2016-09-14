@@ -1,4 +1,5 @@
 /* 
+ * Header for Gradebook project: Organizes gradebook, section, and student
  * File:   gradebook.h
  * Author: hdamron1594
  *

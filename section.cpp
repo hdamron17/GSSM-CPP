@@ -1,4 +1,5 @@
 /* 
+ * Section class: contains multiple students in a single lesson period
  * File:   section.cpp
  * Author: hdamron1594
  * 
