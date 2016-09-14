@@ -80,5 +80,5 @@ int main(int argc, char** argv) {
             "Continuing to the REAL main\n"
             "------------------------------\n\n";
     
-    gradebook::run();
+    return gradebook::run();
 }

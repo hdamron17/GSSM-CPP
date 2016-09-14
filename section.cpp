@@ -125,3 +125,10 @@ map<string, map<string, double> > section::display_all() const {
     return disp;
 }
 
+bool section::contains(string key) const {
+    return students.count(key) > 0;
+}
+
+student section::find(string key) const {
+    return students.find(key)->second;
+}

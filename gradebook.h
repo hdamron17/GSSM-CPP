@@ -27,6 +27,7 @@ public:
     double average() const; //Gets average of all grades
     map<string, double> get_grades() const; //Gets map of all grades
     double get_grade(string) const; //Gets grade under specified key
+    bool contains(string) const; //tests if contains key
     
     //mutators
     void change_grade(string, double); //Changes grade under specified key
@@ -59,6 +60,8 @@ public:
     map<string, double> display_set(string) const;//Gets specified grade for all
     map<string, double> all_averages() const; //Gets averages for all students
     map<string, map<string, double> > display_all() const; //Gets everything
+    bool contains(string) const; //tests if contains key
+    student find(string) const; //gets student or gives out_of_range
     
     //mutators
     void expell(string); //Deletes student at specified key
@@ -88,14 +91,15 @@ public:
     bool term() const; //returns true if it is ready to terminate looping
     
     //mutators
-    void parse(string); //parses and executes string command
+    int parse(string); //parses and executes string command
     
     //static methods and variables
     static vector<string> tokenize(string); //tokenizes string; delimiter=" "
     static vector<string> tokenize(string, string); //tokenizes string
     static string detokenize(vector<string>, int); //puts vector back together
+    static string detokenize(vector<string>, int, int); //uses end = tokens.size())
     
-    static void run(); //static main for gradebook class
+    static int run(); //static main for gradebook class
     
     static string HELP;
     static string WELCOME;

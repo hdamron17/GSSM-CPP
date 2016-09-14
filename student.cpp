@@ -66,3 +66,6 @@ map<string, double> student::get_grades() const {
     return grades;
 }
 
+bool student::contains(string key) const{
+    return grades.count(key) > 0;
+}
