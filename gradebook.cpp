@@ -34,15 +34,16 @@ string gradebook::HELP =
         "  display                         \tDisplays gradebook\n"
         "     sections                     \t  lists sections\n"
         "     students                     \t  lists students in selected section\n"
-        "     grades <gradekey>            \t  displays single grade for all students\n"
+        "     grades <grade key>            \t  displays single grade for all students\n"
         "     portfolio                    \t  displays all grades for single student\n"
         "     section                      \t  displays everything about current section\n"
-        "  quit                            \tQuits the program";
+        "  quit                            \tQuits the program\n"
+        "  exit                            \tSame as quit\n";
 
 string gradebook::WELCOME =
         "Welcome to Gradebook, version 1.0\n"
         "This program is designed to help teachers help students.\n"
-        "Type help for usage instructions";
+        "Type help for usage instructions\n";
 
 string gradebook::PROMPT = "GRADEBOOK> ";
 
@@ -69,7 +70,7 @@ int gradebook::parse(string line) {
                 books.find(key);
                 select_book = key;
             } catch (out_of_range& e) {
-                cout << "Cannot find grade book titled \'" << key << "\'";
+                cout << "Cannot find grade book titled \'" << key << "\'\n";
                 return -1;
             }
         } else if (tokens[1] == "student") {
@@ -79,14 +80,15 @@ int gradebook::parse(string line) {
                 if (book.contains(key)) {
                     select_book = key;
                 } else {
-                    cout << "Cannot find grade student named \'" << key << "\'";
+                    cout << "Cannot find grade student named \'" << key << "\'\n";
                     return -1;
                 }
             } catch (out_of_range& e) {
-                cout << "You must select book first";
+                cout << "You must select book first\n";
                 return -1;
             }
         }
+        
     } else if (tokens[0] == "add") {
         if (tokens[1] == "section") {
             string key = gradebook::detokenize(tokens, 2);
@@ -100,7 +102,7 @@ int gradebook::parse(string line) {
                 }
             }
             if (comma == -1) {
-                cout << "Error: format name as <first name> , <last name>";
+                cout << "Error: format name as <first name> , <last name>\n";
                 return -1;
             }
             string fname = gradebook::detokenize(tokens, 2, comma);
@@ -109,10 +111,12 @@ int gradebook::parse(string line) {
                 section sect = books.find(select_book)->second;
                 student temp(fname, lname);
             } catch (out_of_range& e) {
-                cout << "You must select book first";
+                cout << "You must select book first\n";
             }
         }
-    } else if (tokens[1] == "grade") {
+        
+    } else if (tokens[0] == "add" && tokens[1] == "grade"
+            || tokens[0] == "change" && tokens[1] == "grade") {
         int equals = -1;
         for (int i = 2; i < tokens.size(); i++) {
             if (tokens[i] == "=") {
@@ -120,7 +124,7 @@ int gradebook::parse(string line) {
             }
         }
         if (equals == -1) {
-            cout << "Error: format name as <key> = <number>";
+            cout << "Error: format name as <key> = <number>\n";
             return -1;
         }
         string key = gradebook::detokenize(tokens, equals);
@@ -133,26 +137,30 @@ int gradebook::parse(string line) {
                     student stu = sect.find(select_student);
                     stu.change_grade(key, grade);
                 } catch (out_of_range& e) {
-                    cout << "You must select student first";
+                    cout << "You must select student first\n";
                 }
             } catch (out_of_range& e) {
-                cout << "You must select book first";
+                cout << "You must select book first\n";
             }
         } catch (out_of_range& e) {
-            cout << "Incorrect number formatting";
+            cout << "Incorrect number formatting\n";
         }
-    } else if (tokens[0] == "change") {
-        if (tokens[1] == "grade") {
-            string key = gradebook::detokenize(tokens, 2);
-        }
+        
     } else if (tokens[0] == "delete") {
         if (tokens[1] == "section") {
-
+            string key = gradebook::detokenize(tokens, 2);
+            books.erase(key); //TODO may need try catch
         } else if (tokens[1] == "student") {
-
+            string key = gradebook::detokenize(tokens, 2);
+            try {
+                section sect = books.find(select_book)->second;
+            } catch (out_of_range& e) {
+                cout << "You must select book first\n";
+            }
         } else if (tokens[1] == "grade") {
             string key = gradebook::detokenize(tokens, 2);
         }
+        
     } else if (tokens[0] == "lookup") {
         if (tokens[1] == "section") {
             string key = gradebook::detokenize(tokens, 2);
@@ -161,6 +169,7 @@ int gradebook::parse(string line) {
         } else if (tokens[1] == "grade") {
             string key = gradebook::detokenize(tokens, 2);
         }
+        
     } else if (tokens[0] == "display") {
         if (tokens[1] == "sections") {
 
@@ -175,10 +184,12 @@ int gradebook::parse(string line) {
         } else if (tokens[1] == "section") {
 
         }
-    } else if (tokens[0] == "quit") {
+        
+    } else if (tokens[0] == "quit" || tokens[0] == "exit") {
         terminate = true;
+        
     } else {
-        cout << "Invalid command. Type h to view help dialog.";
+        cout << "Invalid command. Type help to view help dialog.\n";
     }
     return 0;
 }
@@ -229,6 +240,5 @@ int gradebook::run() {
         cout << gradebook::PROMPT;
         getline(cin, input);
         main_loop.parse(input);
-        cout << endl;
     } while (!main_loop.term());
 }
