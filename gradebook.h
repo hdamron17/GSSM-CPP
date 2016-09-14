@@ -92,6 +92,7 @@ public:
      
     //accessors
     bool term() const; //returns true if it is ready to terminate looping
+    vector<string> lookup(string) const; //looks up books
     
     //mutators
     int parse(string); //parses and executes string command

@@ -154,16 +154,32 @@ int gradebook::parse(string line) {
             string key = gradebook::detokenize(tokens, 2);
             try {
                 section sect = books.find(select_book)->second;
+                sect.expell(key);
             } catch (out_of_range& e) {
                 cout << "You must select book first\n";
             }
-        } else if (tokens[1] == "grade") {
+        } else if (tokens[1] == "student") {
             string key = gradebook::detokenize(tokens, 2);
+            try {
+                section sect = books.find(select_book)->second;
+                if(select_student != "") {
+                    try {
+                        sect.delete_grade(select_student, key);
+                    } catch (out_of_range& e) {
+                        cout << "Cannot find grade called " << key << endl;
+                    }
+                } else {
+                    cout << "You must select student first\n";
+                }
+            } catch (out_of_range& e) {
+                cout << "You must select book first\n";
+            }
         }
         
     } else if (tokens[0] == "lookup") {
         if (tokens[1] == "section") {
             string key = gradebook::detokenize(tokens, 2);
+            lookup(key);
         } else if (tokens[1] == "student") {
             string key = gradebook::detokenize(tokens, 2);
         } else if (tokens[1] == "grade") {
@@ -196,6 +212,16 @@ int gradebook::parse(string line) {
 
 bool gradebook::term() const {
     return terminate;
+}
+
+vector<string> gradebook::lookup(string keyword) const {
+    vector<string> matches;
+    for(auto iter : books) {
+        if(iter.first.find(keyword) != string::npos) {
+            matches.push_back(iter.first);
+        }
+    }
+    return matches;
 }
 
 vector<string> gradebook::tokenize(string str) {
