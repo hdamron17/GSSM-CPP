@@ -71,14 +71,9 @@ int main(int argc, char** argv) {
         cout << item << " | "; 
     } cout << endl;
     
-    gradebook* test = new gradebook();
-    bool randbool = test->term();
+    cout << "------------------------------\n"
+            "Continuing to the REAL main\n"
+            "------------------------------\n\n";
     
-    gradebook mainbook();
-    cout << gradebook::WELCOME << endl << gradebook::PROMPT;
-    string command;
-    cin << command;
-    while(!mainbook.term()) {
-        
-    }
+    gradebook::run();
 }

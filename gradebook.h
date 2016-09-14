@@ -83,7 +83,7 @@ public:
     //constructors and destructors
     explicit gradebook();
     virtual ~gradebook();
-    
+     
     //accessors
     bool term() const; //returns true if it is ready to terminate looping
     
@@ -94,6 +94,8 @@ public:
     static vector<string> tokenize(string); //tokenizes string; delimiter=" "
     static vector<string> tokenize(string, string); //tokenizes string
     static string detokenize(vector<string>, int); //puts vector back together
+    
+    static void run(); //static main for gradebook class
     
     static string HELP;
     static string WELCOME;

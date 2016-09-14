@@ -11,58 +11,40 @@
  * Created on September 9, 2016, 10:18 PM
  */
 
+#include <iostream>
 #include "gradebook.h"
 
 string gradebook::HELP = 
     "Gradebook, version 1.0\n"
     "Usage:\n"
-    "  help                                     \tDisplays this message\n"
-    "  select                                   \tSelects defaults\n"
-    "     section - <section name>              \t  Selects section\n"
-    "     student [options] - <student name>    \t  Selects student\n"
-    "        -sect <section name>               \t    Specifies section\n"
-    "  delete                                   \tDeletes an attribute\n"
-    "     section [options] - <section name>    \t  Deletes section\n"
-    "        -a                                 \t    deletes all sections (replace \'- <section name>\')\n"
-    "     student [options] - <student name>    \t  Deletes student\n"
-    "        -sect <section name>               \t    Overrides student selection\n"
-    "        -a                                 \t    deletes all students in selected section\n"
-    "     grade [options] - <grade key>         \t  Deletes grade from student\n"
-    "        -sect <section name>               \t    Overrides section selection\n"
-    "        -stu <student name>                \t    Overrides student selection\n"
-    "        -a                                 \t    Deletes all grades in selected section and student\n"
-    "  add                                      \tAdds an attribute\n"
-    "     section [options] - <section name>    \t  Adds section\n"
-    "     student [options] - <student name>    \t  Adds student to section\n"
-    "	 -sect <section name>               \t    Overrides section selection\n"
-    "     grade [options] - <grade key>         \t  Adds grade to student\n"
-    "        -sect <section name>               \t     Overrides section selection\n"
-    "        -stu <student name>                \t     Overrides student selection\n"
-    "  change                                   \tChanges an attribute\n"
-    "     grade [options] - <grade key>         \t  Changes grade for student\n"
-    "        -sect <section name>               \t    Overrides section selection\n"
-    "        -stu <student name>                \t    Overrides student selection\n"
-    "  lookup                                   \tSearches by keyword\n"
-    "     section [options] - <keyword>         \t  Searches sections\n"
-    "     student [options] - <keyword>         \t  Searches students\n"
-    "        -sect <section name>               \t    Overrides section selection\n"
-    "     grade [options] - <grade key>         \t  Searches grades\n"
-    "        -sect <section name>               \t    Overrides section selection\n"
-    "        -stu <student name>                \t    Overrides student selection\n"
-    "  display                                  \tDisplays gradebook\n"
-    "     portfolio [options] [- <student name>]\t  displays all grades for single student\n"
-    "        -sect <section name>               \t     Overrides section selection\n"
-    "     sections                              \t  lists sections\n"
-    "     students                              \t  lists students in selected section\n"
-    "        -sect <section name>               \t    Overrides section selection\n"
-    "     grades [options] - <gradekey>         \t  displays single grade for all students\n"
-    "        -sect <section name>               \t    Overrides section selection\n"
-    "        -stu <student name>                \t    Overrides student selection\n"
-    "     section [- <section name>]            \t  displays everything about current section\n"
-    "        -a                                 \t    Displays all sections at once\n"
-    "  quit                                     \tQuits the program\n"
-    "* Note that -sect and -stu flags temporarily override defaults\n"
-    "     If not included, selected defaults are used";
+    "  help                       \tDisplays this message\n"
+    "  select                     \tSelects defaults\n"
+    "     section <section name>  \t  Selects section\n"
+    "     student <student name>  \t  Selects student\n"
+    "  delete                     \tDeletes an attribute\n"
+    "     section                 \t  Deletes section\n"
+    "        -a                   \t    Deletes all sections\n"
+    "     student                 \t  Deletes student\n"
+    "        -a                   \t    Deletes all students in selected section\n"
+    "     grade <grade key>       \t  Deletes grade from student\n"
+    "        -a                   \t    Deletes all grades in selected section and student\n"
+    "  add                        \tAdds an attribute\n"
+    "     section <section name>  \t  Adds section\n"
+    "     student <student name>  \t  Adds student to section\n"
+    "     grade <grade key>       \t  Adds grade to student\n"
+    "  change                     \tChanges an attribute\n"
+    "     grade <grade key>       \t  Changes grade for student\n"
+    "  lookup                     \tSearches by keyword\n"
+    "     section <keyword>       \t  Searches sections\n"
+    "     student <keyword>       \t  Searches students\n"
+    "     grade <grade key>       \t  Searches grades\n"
+    "  display                    \tDisplays gradebook\n"
+    "     portfolio               \t  displays all grades for single student\n"
+    "     sections                \t  lists sections\n"
+    "     students                \t  lists students in selected section\n"
+    "     grades <gradekey>       \t  displays single grade for all students\n"
+    "     section                 \t  displays everything about current section\n"
+    "  quit                       \tQuits the program";
 
 string gradebook::WELCOME = 
     "Welcome to Gradebook, version 1.0\n"
@@ -142,3 +124,13 @@ string gradebook::detokenize(vector<string> tokens, int begin) {
     //TODO finish putting string vector back together
 }
 
+void gradebook::run() {
+    gradebook main_loop;
+    string input;
+        cout << gradebook::WELCOME << endl;
+    do {
+        cout << gradebook::PROMPT;
+        cin >> input;
+        main_loop.parse(input);
+    } while(!main_loop.term());
+}
