@@ -8,6 +8,9 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
+#include <iostream>
+#include <iomanip>
+#include <sstream>
 #include "gradebook.h"
 
 using namespace std;
@@ -131,4 +134,38 @@ bool section::contains(string key) const {
 
 student section::find(string key) const {
     return students.find(key)->second;
+}
+
+string section::to_string() const {
+    stringstream ret;
+    for(auto iter : students) {
+        student stu = iter.second;
+        ret << stu.get_name() << " {";
+        map<string, double> grades = stu.get_grades();
+        bool first = true;
+        for(auto iter : grades) {
+            ret << setprecision(2) << (first ? "" : " | ") << iter.first
+                    << " = " << std::to_string(iter.second);
+            first = false;
+        } 
+        ret << setprecision(2) << " ; average: " << 
+                std::to_string(stu.average()) << "}\n";
+    }
+    return ret.str();
+}
+
+string section::to_string(string stu_name) const {
+    stringstream ret;
+    student stu = students.find(stu_name)->second;
+    ret << stu.get_name() << " {";
+    map<string, double> grades = stu.get_grades();
+    bool first = true;
+    for(auto iter : grades) {
+        ret << setprecision(2) << (first ? "" : " | ") << iter.first
+                << " = " << std::to_string(iter.second);
+        first = false;
+    } 
+    ret << setprecision(2) << " ; average: " << 
+            std::to_string(stu.average()) << "}\n";
+    return ret.str();
 }

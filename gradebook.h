@@ -62,6 +62,8 @@ public:
     map<string, map<string, double> > display_all() const; //Gets everything
     bool contains(string) const; //tests if contains key
     student find(string) const; //gets student or gives out_of_range
+    string to_string() const; // toString function for entire roster
+    string to_string(string) const; // toString function for one student
     
     //mutators
     void expell(string); //Deletes student at specified key

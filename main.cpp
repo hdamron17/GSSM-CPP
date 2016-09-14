@@ -7,9 +7,6 @@
 
 #include <iostream>
 
-//TODO remove extra libs
-#include <map>
-
 #include "gradebook.h"
 
 using namespace std;
@@ -18,67 +15,42 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-    student brennan("Brennan", "Cain");
-    brennan.change_grade("Test 1", 93);
-    brennan.change_grade("Test 2", 68);
-    cout << "Average is " << brennan.average() << endl;
-    brennan.delete_grade("Test 2");
-    cout << "Average is " << brennan.average() << endl;
+    section test_sect("C++ and occasionally Linux");
+    test_sect.add_student("Brennan", "Cain");
+    test_sect.add_student("Hunter", "Damron");
+    test_sect.add_student("Dennis", "Perea");
     
-    section sect("Physics");
-    sect.add_student("Tesla", "Waters");
-    sect.change_grade("Tesla Waters", "Test 1", 89);
-    sect.change_grade("Tesla Waters", "Test 2", 97);
-    sect.change_grade("Tesla Waters", "Test 3", 69);
+    test_sect.change_grade("Brennan Cain", "Test 1", 94);
+    test_sect.change_grade("Brennan Cain", "Test 2", 78); //oops
+    test_sect.change_grade("Hunter Damron", "Test 1", 99);
+    test_sect.change_grade("Hunter Damron", "Test 2", 98);
+    test_sect.change_grade("Dennis Perea", "Test 1", 89);
+    test_sect.change_grade("Dennis Perea", "Test 2", 93);
     
-    vector<array<string,2> > new_stus = 
-    {{"Brennan", "Cain"}, {"Hunter", "Damron"}};
-    sect.add_all(new_stus);
+    cout << test_sect.to_string();
     
-    sect.change_grade("Brennan Cain", "Test 2", 93);
-    sect.change_grade("Hunter Damron", "Test 2", 96);
-    sect.change_grade("Hunter Damron", "Test 3", 86);
+    cout << endl;
     
-    cout << endl << "Tesla" << endl;
-    for(auto iter : sect.display("Tesla Waters")) {
-        cout << iter.first << " = " << iter.second << endl;
-    }
+    test_sect.expell("Dennis Perea");
+    cout << "Haha can't get Dennis's stuff anymore. He gone." << endl;
     
-    cout << endl << "Test 2" << endl;
-    for(auto iter : sect.display_set("Test 2")) {
-        cout << iter.first << " = " << iter.second << endl;
-    }
+    cout << "Brennan's average before change: " << 
+            test_sect.average("Brennan Cain") << endl;
+    test_sect.change_grade("Brennan Cain", "Test 2", 98);
+    cout << "Brennan's average after change: " << 
+            test_sect.average("Brennan Cain") << endl;
     
-    cout << endl << "Test 3" << endl;
-    for(auto iter : sect.display_set("Test 3")) {
-        cout << iter.first << " = " << iter.second << endl;
-    }
+    cout << endl;
     
-    cout << endl << "Averages" << endl;
-    for(auto iter : sect.all_averages()) {
-        cout << iter.first << " = " << iter.second << endl;
-    }
+    cout << "Personal portfolio\n" << test_sect.to_string("Hunter Damron");
     
-    sect.add_student("Brennan #2", "Cain");
-    for(string match : sect.lookup("Bren")) {
-        cout << match + " ; ";
-    } cout << endl;
+    cout << endl;
     
-    cout << "Brennan #2 has a " << sect.average("Brennan #2 Cain") << endl;
-
-    vector<string> tokenized = gradebook::tokenize("I love beans");
-    for(string item : tokenized) {
-        cout << item << " | "; 
-    } cout << endl;
+    cout << "Entire roster\n" << test_sect.to_string();
     
-    string together = gradebook::detokenize(tokenized, 1);
-    cout << "Come together : " << together << endl;
+//    cout << "------------------------------\n"
+//            "Continuing to the REAL main\n"
+//            "------------------------------\n\n";
     
-    section testroster("Test");
-    
-    cout << "------------------------------\n"
-            "Continuing to the REAL main\n"
-            "------------------------------\n\n";
-    
-    return gradebook::run();
+//    return gradebook::run();
 }
