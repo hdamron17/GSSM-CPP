@@ -179,26 +179,96 @@ int gradebook::parse(string line) {
     } else if (tokens[0] == "lookup") {
         if (tokens[1] == "section") {
             string key = gradebook::detokenize(tokens, 2);
-            lookup(key);
+            vector<string> matches = lookup(key);
+            for(string str : matches) {
+                cout << str << "    ";
+            } 
+            cout << endl;
         } else if (tokens[1] == "student") {
             string key = gradebook::detokenize(tokens, 2);
+            try {
+                section sect = books.find(select_book)->second;
+                vector<string> matches = sect.lookup(key);
+                for(string str : matches) {
+                    cout << str << "    ";
+                } 
+                cout << endl;
+            } catch(out_of_range& e) {
+                cout << "You must select book first\n";
+            }
         } else if (tokens[1] == "grade") {
             string key = gradebook::detokenize(tokens, 2);
+            try {
+                section sect = books.find(select_book)->second;
+                if(sect.contains(select_student)) {
+                    student stu = sect.find(select_student);
+                    vector<string> matches = stu.lookup(key);
+                    for(string str : matches) {
+                        cout << str << "    ";
+                    } 
+                    cout << endl;
+                } else {
+                    cout << "You must select student first";
+                }
+            } catch(out_of_range& e) {
+                cout << "You must select book first\n";
+            }
         }
         
     } else if (tokens[0] == "display") {
         if (tokens[1] == "sections") {
-
+            for(auto sect : books) {
+                cout << sect.first << "    ";
+            }
+            cout << endl;
         } else if (tokens[1] == "students") {
-
+            try {
+                section sect = books.find(select_book)->second;
+                for(auto stu : sect.stu_map()) {
+                    cout << stu.first << "    ";
+                }
+                cout << endl;
+            } catch(out_of_range& e) {
+                cout << "You must select book first\n";
+            }
         } else if (tokens[1] == "grades") {
             string key = gradebook::detokenize(tokens, 2);
+            try {
+                section sect = books.find(select_book)->second;
+                map<string, double> list = sect.display_set(key);
+                for(auto grade : list) {
+                    cout << grade.first << " : " << grade.second << endl;
+                }
+            } catch(out_of_range& e) {
+                cout << "You must select book first\n";
+            }
         } else if (tokens[1] == "averages") {
-
+            try {
+                section sect = books.find(select_book)->second;
+                for(auto stu : sect.stu_map()) {
+                    cout << stu.first << " : " << stu.second.average() << endl;
+                }
+            } catch(out_of_range& e) {
+                cout << "You must select book first\n";
+            }
         } else if (tokens[1] == "portfolio") {
-
+            try {
+                section sect = books.find(select_book)->second;
+                try {
+                    cout << sect.to_string(select_student);
+                } catch(out_of_range& e) {
+                    cout << "You must select student first\n";
+                }
+            } catch(out_of_range& e) {
+                cout << "You must select book first\n";
+            }
         } else if (tokens[1] == "section") {
-
+            try {
+                section sect = books.find(select_book)->second;
+                cout << sect.to_string();
+            } catch(out_of_range& e) {
+                cout << "You must select book first\n";
+            }
         }
         
     } else if (tokens[0] == "quit" || tokens[0] == "exit") {

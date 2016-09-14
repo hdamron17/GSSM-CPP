@@ -29,6 +29,7 @@ public:
     map<string, double> get_grades() const; //Gets map of all grades
     double get_grade(string) const; //Gets grade under specified key
     bool contains(string) const; //tests if contains key
+    vector<string> lookup(string) const; //looks up grade
     
     //mutators
     void change_grade(string, double); //Changes grade under specified key
@@ -44,8 +45,8 @@ private:
 #endif /* STUDENT_H */
 
 
-#ifndef ROSTER_H
-#define ROSTER_H
+#ifndef SECTION_H
+#define SECTION_H
 
 class section {
 public:
@@ -65,6 +66,7 @@ public:
     student find(string) const; //gets student or gives out_of_range
     string to_string() const; // toString function for entire roster
     string to_string(string) const; // toString function for one student
+    map<string, student> stu_map() const; //gets a copy of student map
     
     //mutators
     void expell(string); //Deletes student at specified key
@@ -79,7 +81,7 @@ private:
 
 };
 
-#endif /* ROSTER_H */
+#endif /* SECTION_H */
 
 #ifndef GRADEBOOK_H
 #define GRADEBOOK_H
