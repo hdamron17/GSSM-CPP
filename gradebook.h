@@ -88,17 +88,6 @@ private:
 
 class gradebook {
 public:
-    //constructors and destructors
-    explicit gradebook();
-    virtual ~gradebook();
-     
-    //accessors
-    bool term() const; //returns true if it is ready to terminate looping
-    vector<string> lookup(string) const; //looks up books
-    
-    //mutators
-    int parse(string); //parses and executes string command
-    
     //static methods and variables
     static vector<string> tokenize(string); //tokenizes string; delimiter=" "
     static vector<string> tokenize(string, string); //tokenizes string
@@ -112,6 +101,17 @@ public:
     static string PROMPT;
     
 private:
+    //constructors and destructors
+    explicit gradebook();
+    virtual ~gradebook();
+     
+    //accessors
+    bool term() const; //returns true if it is ready to terminate looping
+    vector<string> lookup(string) const; //looks up books
+    
+    //mutators
+    int parse(string); //parses and executes string command
+    
     map<string, section> books;
     string select_book;
     string select_student;

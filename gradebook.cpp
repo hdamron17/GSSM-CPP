@@ -32,11 +32,11 @@ string gradebook::HELP =
         "     student <keyword>            \t  Searches students\n"
         "     grade <grade key>            \t  Searches grades\n"
         "  display                         \tDisplays gradebook\n"
-        "     sections                     \t  lists sections\n"
-        "     students                     \t  lists students in selected section\n"
-        "     grades <grade key>            \t  displays single grade for all students\n"
-        "     portfolio                    \t  displays all grades for single student\n"
-        "     section                      \t  displays everything about current section\n"
+        "     sections                     \t  Lists sections\n"
+        "     students                     \t  Lists students in selected section\n"
+        "     grades <grade key>           \t  Displays single grade for all students\n"
+        "     portfolio                    \t  Displays all grades for single student\n"
+        "     section                      \t  Displays everything about current section\n"
         "  quit                            \tQuits the program\n"
         "  exit                            \tSame as quit\n";
 
