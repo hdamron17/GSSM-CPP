@@ -116,6 +116,9 @@ private:
     string select_book;
     string select_student;
     bool terminate;
+    
+    static string GREEN; //terminal green
+    static string RESET; //reset color
 };
 
 #endif /* GRADEBOOK_H */
