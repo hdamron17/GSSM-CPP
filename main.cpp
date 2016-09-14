@@ -71,6 +71,11 @@ int main(int argc, char** argv) {
         cout << item << " | "; 
     } cout << endl;
     
+    string together = gradebook::detokenize(tokenized, 1);
+    cout << "Come together : " << together << endl;
+    
+    section testroster("Test");
+    
     cout << "------------------------------\n"
             "Continuing to the REAL main\n"
             "------------------------------\n\n";

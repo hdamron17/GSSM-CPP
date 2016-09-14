@@ -17,34 +17,32 @@
 string gradebook::HELP = 
     "Gradebook, version 1.0\n"
     "Usage:\n"
-    "  help                       \tDisplays this message\n"
-    "  select                     \tSelects defaults\n"
-    "     section <section name>  \t  Selects section\n"
-    "     student <student name>  \t  Selects student\n"
-    "  delete                     \tDeletes an attribute\n"
-    "     section                 \t  Deletes section\n"
-    "        -a                   \t    Deletes all sections\n"
-    "     student                 \t  Deletes student\n"
-    "        -a                   \t    Deletes all students in selected section\n"
-    "     grade <grade key>       \t  Deletes grade from student\n"
-    "        -a                   \t    Deletes all grades in selected section and student\n"
-    "  add                        \tAdds an attribute\n"
-    "     section <section name>  \t  Adds section\n"
-    "     student <student name>  \t  Adds student to section\n"
-    "     grade <grade key>       \t  Adds grade to student\n"
-    "  change                     \tChanges an attribute\n"
-    "     grade <grade key>       \t  Changes grade for student\n"
-    "  lookup                     \tSearches by keyword\n"
-    "     section <keyword>       \t  Searches sections\n"
-    "     student <keyword>       \t  Searches students\n"
-    "     grade <grade key>       \t  Searches grades\n"
-    "  display                    \tDisplays gradebook\n"
-    "     portfolio               \t  displays all grades for single student\n"
-    "     sections                \t  lists sections\n"
-    "     students                \t  lists students in selected section\n"
-    "     grades <gradekey>       \t  displays single grade for all students\n"
-    "     section                 \t  displays everything about current section\n"
-    "  quit                       \tQuits the program";
+    "  help                         \tDisplays this message\n"
+    "  h                            \tSame as help\n"
+    "  select                       \tSelects defaults\n"
+    "     section <section name>    \t  Selects section\n"
+    "     student <student name>    \t  Selects student\n"
+    "  add                          \tAdds an attribute\n"
+    "     section <section name>    \t  Adds section\n"
+    "     student <lname> , <fname> \t  Adds student to section\n"
+    "     grade <grade key>         \t  Adds grade to student\n"
+    "  change                       \tChanges an attribute\n"
+    "     grade <grade key>         \t  Changes grade for student\n"
+    "  delete                       \tDeletes an attribute\n"
+    "     section                   \t  Deletes section\n"
+    "     student                   \t  Deletes student\n"
+    "     grade <grade key>         \t  Deletes grade from student\n"
+    "  lookup                       \tSearches by keyword\n"
+    "     section <keyword>         \t  Searches sections\n"
+    "     student <keyword>         \t  Searches students\n"
+    "     grade <grade key>         \t  Searches grades\n"
+    "  display                      \tDisplays gradebook\n"
+    "     sections                  \t  lists sections\n"
+    "     students                  \t  lists students in selected section\n"
+    "     grades <gradekey>         \t  displays single grade for all students\n"
+    "     portfolio                 \t  displays all grades for single student\n"
+    "     section                   \t  displays everything about current section\n"
+    "  quit                         \tQuits the program";
 
 string gradebook::WELCOME = 
     "Welcome to Gradebook, version 1.0\n"
@@ -60,8 +58,6 @@ gradebook::gradebook() {
     select_book = "";
     select_student = "";
     terminate = false;
-    
-    
 }
 
 gradebook::~gradebook() {
@@ -70,23 +66,58 @@ gradebook::~gradebook() {
 void gradebook::parse(string line) {
     vector<string> tokens = tokenize(line);
     if(tokens[0] == "help") {
-        
+        cout << gradebook::HELP;
     } else if(tokens[0] == "select") {
+        if(tokens[1] == "section") {
+            string key = gradebook::detokenize(tokens, 2);
+            
+        } else if(tokens[1] == "student") {
+            string key = gradebook::detokenize(tokens, 2);
+        }
+    } else if(tokens[0] == "add") {
+        if(tokens[1] == "section") {
+            string key = gradebook::detokenize(tokens, 2);
+            section temp(key);
+            books.insert({key, temp});
+        } else if(tokens[1] == "student") {
+            string key = gradebook::detokenize(tokens, 2);
+        } else if(tokens[1] == "grade") {
+            string key = gradebook::detokenize(tokens, 2);
+        }
+    } else if(tokens[0] == "change") { 
+        if(tokens[1] == "grade") {
+            string key = gradebook::detokenize(tokens, 2);
+        }
+    } else if(tokens[0] == "delete") {
         if(tokens[1] == "section") {
             
         } else if(tokens[1] == "student") {
             
-        } 
-    } else if(tokens[0] == "delete") {
-        
-    } else if(tokens[0] == "add") {
-        
-    } else if(tokens[0] == "change") {
-        
+        } else if(tokens[1] == "grade") {
+            string key = gradebook::detokenize(tokens, 2);
+        }
     } else if(tokens[0] == "lookup") {
-        
+        if(tokens[1] == "section") {
+            string key = gradebook::detokenize(tokens, 2);
+        } else if(tokens[1] == "student") {
+            string key = gradebook::detokenize(tokens, 2);
+        } else if(tokens[1] == "grade") {
+            string key = gradebook::detokenize(tokens, 2);
+        }
     } else if(tokens[0] == "display") {
+        if(tokens[1] == "sections") {
+            
+        } else if(tokens[1] == "students") {
+            
+        } else if(tokens[1] == "grades") {
+            string key = gradebook::detokenize(tokens, 2);
+        } else if(tokens[1] == "averages") {
         
+        } else if(tokens[1] == "portfolio") {
+            
+        } else if(tokens[1] == "section") {
+            
+        }
     } else if(tokens[0] == "quit") {
         terminate = true;
     } else {
@@ -118,19 +149,24 @@ vector<string> gradebook::tokenize(string str, string delimiter) {
 }
 
 string gradebook::detokenize(vector<string> tokens, int begin) {
-    if(begin > tokens.size() - 1) {
+    if(begin > tokens.size() - 1 || begin < 0) {
         throw out_of_range("Beginning index is not in vector");
     }
-    //TODO finish putting string vector back together
+    string together = "";
+    for(int i = begin; i < tokens.size(); i++) {
+        together = together + " " + tokens[i];
+    }
+    return together;
 }
 
 void gradebook::run() {
     gradebook main_loop;
-    string input;
-        cout << gradebook::WELCOME << endl;
+    string input = "";
+    cout << gradebook::WELCOME << endl;
     do {
         cout << gradebook::PROMPT;
-        cin >> input;
+        getline(cin, input);
         main_loop.parse(input);
+        cout << endl;
     } while(!main_loop.term());
 }
