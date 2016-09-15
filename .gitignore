@@ -1,6 +1,5 @@
 
 ##### Project files
-
 build/
 dist/
 docs/
@@ -9,3 +8,6 @@ nbproject/
 ##### C++ Object Files
 *.o
 *.o.d
+
+##### Compressed Versions
+*.tar.gz
