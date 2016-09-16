@@ -97,8 +97,7 @@ void section::add_student(string fname, string lname) {
     if(match != students.end()) {
         return; //Does not modify student if he/she already exists
     }
-    student temp(fname, lname);
-    students.insert(make_pair(fname + " " + lname, temp));
+    students.insert(make_pair(fname + " " + lname, student(fname, lname)));
 }
 
 void section::add_all(vector<array<string, 2> > new_students) {
