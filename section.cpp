@@ -161,6 +161,6 @@ string section::to_string(string stu_name) const {
     return ret.str();
 }
 
-map<string, student&> section::stu_map() const {
+map<string, student> section::stu_map() const {
     return students;
 }

@@ -18,7 +18,7 @@ using namespace std;
 class student {
 public:
     //constructors and destructors
-    student(string, string); //Constructor with first and last name
+    explicit student(string, string); //Constructor with first and last name
     virtual ~student(); //Default destructor
     
     //accessors

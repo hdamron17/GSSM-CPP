@@ -170,7 +170,7 @@ int gradebook::parse(string line) {
                 string lname = gradebook::detokenize(tokens, comma + 1);
                 try {
                     section sect = books.find(select_book)->second;
-                    sect->add_student(fname, lname);
+                    sect.add_student(fname, lname);
                 } catch (out_of_range& e) {
                     cout << "You must select book first\n";
                     return -1;
@@ -341,8 +341,8 @@ int gradebook::parse(string line) {
             }
         } else if (tokens[1] == "averages") {
             try {
-                section *sect = &books.find(select_book)->second;
-                for(auto stu : sect->stu_map()) {
+                section sect = books.find(select_book)->second;
+                for(auto stu : sect.stu_map()) {
                     cout << stu.first << " : " << stu.second.average() << endl;
                 }
             } catch(out_of_range& e) {
