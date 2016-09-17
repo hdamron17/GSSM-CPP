@@ -98,15 +98,7 @@ void section::add_student(string fname, string lname) {
         return; //Does not modify student if he/she already exists
     }
     student temp(fname, lname);
-    students.insert(make_pair(fname + " " + lname, temp));
-}
-
-void section::add_all(vector<array<string, 2> > new_students) {
-    for(auto pair : new_students) {
-        string key = pair[0] + " " + pair[1];
-        student temp(pair[0], pair[1]);
-        students.insert(make_pair(key, temp));
-    }
+    students[fname + " " + lname] = temp;
 }
 
 map<string, double> section::all_averages() const {
@@ -169,3 +161,6 @@ string section::to_string(string stu_name) const {
     return ret.str();
 }
 
+map<string, student&> section::stu_map() const {
+    return students;
+}
