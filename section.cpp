@@ -97,7 +97,7 @@ void section::add_student(string fname, string lname) {
     if(match != students.end()) {
         return; //Does not modify student if he/she already exists
     }
-    student* temp = new student(fname, lname);
+    student temp(fname, lname);
     students[fname + " " + lname] = temp;
 }
 
@@ -161,6 +161,6 @@ string section::to_string(string stu_name) const {
     return ret.str();
 }
 
-map<string, student&> section::stu_map() const {
+map<string, student> section::stu_map() const {
     return students;
 }

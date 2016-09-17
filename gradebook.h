@@ -66,7 +66,7 @@ public:
     student find(string) const; //gets student or gives out_of_range
     string to_string() const; // toString function for entire roster
     string to_string(string) const; // toString function for one student
-    map<string, student&> stu_map() const; //gets a copy of student map
+    map<string, student> stu_map() const; //gets a copy of student map
     
     //mutators
     void expell(string); //Deletes student at specified key
@@ -75,7 +75,7 @@ public:
     void add_student(string, string); //Adds student to roster
     
 private:
-    map<string, student&> students;
+    map<string, student> students;
     string classname;
 
 };

@@ -55,6 +55,15 @@ int main(int argc, char** argv) {
 //    
 //    cout << "Entire roster\n" << test_sect.to_string();
     
+    section test_sect("Test Section");
+    test_sect.add_student("Will", "Schmidt");
+    test_sect.change_grade("Will", "Test 1", 32);
+    student test_stu = test_sect.find("Will Schmidt");
+    test_stu.change_grade("Test 1", 88);
+    cout << test_stu.average() << endl;
+    cout << test_sect.average("Will Schmidt") << endl;
+    
+    
     /**
      * Real User Interface function
      */
@@ -63,5 +72,6 @@ int main(int argc, char** argv) {
 //            "Continuing to the REAL main\n"
 //            "------------------------------\n\n";
     
-    return gradebook::run();
+//    return gradebook::run();
 }
+    

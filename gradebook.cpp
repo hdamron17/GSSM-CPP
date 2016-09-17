@@ -169,8 +169,8 @@ int gradebook::parse(string line) {
             if (tokens.size() > comma + 1) {
                 string lname = gradebook::detokenize(tokens, comma + 1);
                 try {
-                    section *sect = &books.find(select_book)->second;
-                    sect->add_student(fname, lname);
+                    section sect = books.find(select_book)->second;
+                    sect.add_student(fname, lname);
                 } catch (out_of_range& e) {
                     cout << "You must select book first\n";
                     return -1;
