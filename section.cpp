@@ -145,11 +145,12 @@ string section::to_string() const {
         map<string, double> grades = stu.get_grades();
         bool first = true;
         for(auto iter : grades) {
-            ret << setprecision(5) << (first ? "" : " | ") << iter.first
-                    << " = " << iter.second;
+            ret << setprecision(2) << (first ? "" : " | ") << iter.first
+                    << " = " << std::to_string(iter.second);
             first = false;
         } 
-        ret << " ; average: " << stu.average() << "}\n";
+        ret << setprecision(2) << " ; average: " << 
+                std::to_string(stu.average()) << "}\n";
     }
     return ret.str();
 }
@@ -161,11 +162,11 @@ string section::to_string(string stu_name) const {
     map<string, double> grades = stu.get_grades();
     bool first = true;
     for(auto iter : grades) {
-        ret << std::setprecision(5) << (first ? "" : " | ") << iter.first
-                << " = " << iter.second;
+        ret << setprecision(2) << (first ? "" : " | ") << iter.first
+                << " = " << std::to_string(iter.second);
         first = false;
     } 
-    ret << " || average: " << stu.average() << "}\n";
+    ret << setprecision(2) << " ; average: " << 
+            std::to_string(stu.average()) << "}\n";
     return ret.str();
 }
-
