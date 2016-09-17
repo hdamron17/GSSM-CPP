@@ -18,7 +18,7 @@ using namespace std;
 class student {
 public:
     //constructors and destructors
-    explicit student(string, string); //Constructor with first and last name
+    student(string, string); //Constructor with first and last name
     virtual ~student(); //Default destructor
     
     //accessors
@@ -29,6 +29,7 @@ public:
     map<string, double> get_grades() const; //Gets map of all grades
     double get_grade(string) const; //Gets grade under specified key
     bool contains(string) const; //tests if contains key
+    vector<string> lookup(string) const; //looks up grade
     
     //mutators
     void change_grade(string, double); //Changes grade under specified key
@@ -44,8 +45,8 @@ private:
 #endif /* STUDENT_H */
 
 
-#ifndef ROSTER_H
-#define ROSTER_H
+#ifndef SECTION_H
+#define SECTION_H
 
 class section {
 public:
@@ -65,13 +66,13 @@ public:
     student find(string) const; //gets student or gives out_of_range
     string to_string() const; // toString function for entire roster
     string to_string(string) const; // toString function for one student
+    map<string, student> stu_map() const; //gets a copy of student map
     
     //mutators
     void expell(string); //Deletes student at specified key
     void change_grade(string, string, double);//Changes grade with specified key
     void delete_grade(string, string); //Deletes grade with specified key
     void add_student(string, string); //Adds student to roster
-    void add_all(vector<array<string,2> >); //Adds multiple students
     
 private:
     map<string, student> students;
@@ -79,23 +80,13 @@ private:
 
 };
 
-#endif /* ROSTER_H */
+#endif /* SECTION_H */
 
 #ifndef GRADEBOOK_H
 #define GRADEBOOK_H
 
 class gradebook {
 public:
-    //constructors and destructors
-    explicit gradebook();
-    virtual ~gradebook();
-     
-    //accessors
-    bool term() const; //returns true if it is ready to terminate looping
-    
-    //mutators
-    int parse(string); //parses and executes string command
-    
     //static methods and variables
     static vector<string> tokenize(string); //tokenizes string; delimiter=" "
     static vector<string> tokenize(string, string); //tokenizes string
@@ -109,10 +100,24 @@ public:
     static string PROMPT;
     
 private:
+    //constructors and destructors
+    explicit gradebook();
+    virtual ~gradebook();
+     
+    //accessors
+    bool term() const; //returns true if it is ready to terminate looping
+    vector<string> lookup(string) const; //looks up books
+    
+    //mutators
+    int parse(string); //parses and executes string command
+    
     map<string, section> books;
     string select_book;
     string select_student;
     bool terminate;
+    
+    static string GREEN; //terminal green
+    static string RESET; //reset color
 };
 
 #endif /* GRADEBOOK_H */
