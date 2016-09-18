@@ -70,3 +70,13 @@ map<string, double> student::get_grades() const {
 bool student::contains(string key) const{
     return grades.count(key) > 0;
 }
+
+vector<string> student::lookup(string keyword) const {
+    vector<string> matches;
+    for(auto iter : grades) {
+        if(iter.first.find(keyword) != string::npos) {
+            matches.push_back(iter.first);
+        }
+    }
+    return matches;
+}

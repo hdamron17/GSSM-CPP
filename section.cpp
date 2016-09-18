@@ -98,7 +98,7 @@ void section::add_student(string fname, string lname) {
         return; //Does not modify student if he/she already exists
     }
     student temp(fname, lname);
-    students[fname + " " + lname] = temp;
+    students.insert(make_pair(fname + " " + lname, temp));
 }
 
 map<string, double> section::all_averages() const {
@@ -137,7 +137,8 @@ string section::to_string() const {
         map<string, double> grades = stu.get_grades();
         bool first = true;
         for(auto iter : grades) {
-            ret << setprecision(5) << (first ? "" : " | ") << iter.first
+            ret.precision(5);
+            ret << (first ? "" : " | ") << iter.first
                     << " = " << iter.second;
             first = false;
         } 
@@ -153,7 +154,8 @@ string section::to_string(string stu_name) const {
     map<string, double> grades = stu.get_grades();
     bool first = true;
     for(auto iter : grades) {
-        ret << std::setprecision(5) << (first ? "" : " | ") << iter.first
+        ret.precision(5);
+        ret << (first ? "" : " | ") << iter.first
                 << " = " << iter.second;
         first = false;
     } 
