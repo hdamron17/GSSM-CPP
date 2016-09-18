@@ -13,20 +13,9 @@
 using namespace std;
 
 /* 
- * 
+ * Calls user interface loop within gradebook
  */
 int main(int argc, char** argv) {
-    /**
-     * Fake User Interface
-     */
-    
-    
-    
-    /**
-     * Real User Interface function
-     */
-    
-    cout << "------------------------------\n"; // TODO remove
     
     return gradebook::run();
 }

@@ -41,7 +41,11 @@ double student::get_grade(string key) const {
 }
 
 void student::change_grade(string key, double new_grade) {
-    grades[key] = new_grade;
+    if(grades.count(key) > 0) {
+        grades[key] = new_grade;
+    } else {
+        grades.insert(make_pair(key, new_grade));
+    }
 }
 
 void student::delete_grade(string key) {
