@@ -188,7 +188,7 @@ int gradebook::parse(string line) {
         if (tokens[1] == "section") {
             if(tokens.size() > 2) {
                 string key = gradebook::detokenize(tokens, 2);
-                books.erase(key); //TODO may need try catch
+                books.erase(key); //TODO needs a test to say if it was deleted
             } else {
                 cout << "Missing section name\n";
                 return -1;
