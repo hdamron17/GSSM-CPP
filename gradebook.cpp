@@ -132,6 +132,9 @@ int gradebook::parse(string line) {
                 string grade_str = gradebook::detokenize(tokens, equals + 1);
                 try {
                     double grade = stod(grade_str);
+                    if(grade > 100 || grade < 0) {
+                        cout << "Grade must be between 0 and 100\n";
+                    }
                     if (books.count(select_book) > 0) {
                         section *sect = &books.find(select_book)->second;
                         try {
@@ -293,7 +296,7 @@ int gradebook::parse(string line) {
                             }
                             cout << endl;
                         } else {
-                            cout << "You must select student first";
+                            cout << "You must select student first\n";
                             return -1;
                         }
                     } else {
