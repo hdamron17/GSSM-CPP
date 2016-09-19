@@ -148,6 +148,9 @@ string section::to_string() const {
             ret << "average: N/A}\n";
         }
     }
+    if(students.size() <= 0) {
+        cout << endl;
+    }
     return ret.str();
 }
 

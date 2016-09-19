@@ -14,25 +14,24 @@ string gradebook::HELP =
         "Usage:\n"
         "  help                            \tDisplays this message\n"
         "  h                               \tSame as help\n"
-        "  select                          \tSelects defaults\n"
+        "  select [option]                 \tSelects defaults\n"
         "     section <section name>       \t  Selects section\n"
         "     student <student name>       \t  Selects student\n"
-        "  add                             \tAdds an attribute\n"
+        "  create [option]                 \tAdds an attribute\n"
         "     section <section name>       \t  Adds section\n"
         "     student <lname> , <fname>    \t  Adds student to section\n"
         "     grade <grade key> = <number> \t  Adds grade to student\n"
-        "  change                          \tChanges an attribute\n"
+        "  update [option]                 \tChanges an attribute\n"
         "     grade <grade key> = <number> \t  Changes grade for student\n"
-        "  delete                          \tDeletes an attribute\n"
+        "  drop [option]                   \tDeletes an attribute\n"
         "     section                      \t  Deletes section\n"
         "     student                      \t  Deletes student\n"
         "     grade <grade key>            \t  Deletes grade from student\n"
-        "  lookup                          \tSearches by keyword\n"
+        "  lookup [option]                 \tSearches by keyword\n"
         "     section <keyword>            \t  Searches sections\n"
         "     student <keyword>            \t  Searches students\n"
         "     grade <grade key>            \t  Searches grades\n"
-        "  display                         \tDisplays gradebook\n"
-        "  list                            \tSame as display\n"
+        "  show [option]                   \tDisplays gradebook\n"
         "     sections                     \t  Lists sections\n"
         "     students                     \t  Lists students in selected section\n"
         "     grades <grade key>           \t  Displays single grade for all students\n"
@@ -65,9 +64,13 @@ gradebook::~gradebook() {
 
 int gradebook::parse(string line) {
     if(line.size() <= 0) {
-        return -1;
+        return 0;
     }
     vector<string> tokens = tokenize(line);
+    if(tokens.size() <= 1) {
+        cout << "Not enough arguments\n";
+        return -1;
+    }
     if (tokens[0] == "help" || tokens[0] == "h") {
         cout << gradebook::HELP;
     } else if (tokens[0] == "select") {
@@ -77,7 +80,7 @@ int gradebook::parse(string line) {
                 if(books.count(key) > 0) {
                     select_book = key;
                 } else {
-                    cout << "Cannot find grade book titled \'" << key << "\'\n";
+                    cout << "Cannot find section titled \'" << key << "\'\n";
                     return -1;
                 }
             } else {
@@ -92,7 +95,7 @@ int gradebook::parse(string line) {
                     if (book->contains(key)) {
                         select_student = key;
                     } else {
-                        cout << "Cannot find grade student named \'" << key << "\'\n";
+                        cout << "Cannot find student named \'" << key << "\'\n";
                         return -1;
                     }
                 } else {
@@ -108,7 +111,7 @@ int gradebook::parse(string line) {
             return -1;
         }
 
-    } else if ((tokens[0] == "add" || tokens[0] == "change")
+    } else if ((tokens[0] == "create" || tokens[0] == "update")
             && tokens[1] == "grade") {
         int equals = -1;
         for (int i = 2; i < tokens.size(); i++) {
@@ -117,7 +120,7 @@ int gradebook::parse(string line) {
             }
         }
         if (equals == -1) {
-            cout << "Error: format name as <key> = <number>\n";
+            cout << "Error: format name as <grade key> = <number>\n";
             return -1;
         }
         string key = gradebook::detokenize(tokens, 2, equals);
@@ -146,7 +149,7 @@ int gradebook::parse(string line) {
             return -1;
         }
 
-    } else if (tokens[0] == "add") {
+    } else if (tokens[0] == "create") {
         if (tokens[1] == "section") {
             try {
                 string key = gradebook::detokenize(tokens, 2);
@@ -186,7 +189,7 @@ int gradebook::parse(string line) {
             return -1;
         }
 
-    } else if (tokens[0] == "delete") {
+    } else if (tokens[0] == "drop") {
         if (tokens[1] == "section") {
             if (tokens.size() > 2) {
                 string key = gradebook::detokenize(tokens, 2);
@@ -302,7 +305,7 @@ int gradebook::parse(string line) {
             return -1;
         }
 
-    } else if (tokens[0] == "display" || tokens[0] == "list") {
+    } else if (tokens[0] == "show") {
         if (tokens[1] == "sections") {
             for (auto sect : books) {
                 if (sect.first == select_book) {
@@ -358,9 +361,9 @@ int gradebook::parse(string line) {
         } else if (tokens[1] == "portfolio") {
             if(books.count(select_book) > 0) {
                 section *sect = &books.find(select_book)->second;
-                try {
+                if(sect->contains(select_student)) {
                     cout << sect->to_string(select_student);
-                } catch (out_of_range& e) {
+                } else {
                     cout << "You must select student first\n";
                     return -1;
                 }
