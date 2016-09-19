@@ -85,16 +85,16 @@ int gradebook::parse(string line) {
         } else if (tokens[1] == "student") {
             if (tokens.size() > 2) {
                 string key = gradebook::detokenize(tokens, 2);
-                try {
+                if(books.count(select_book) > 0) {
                     section book = books.find(select_book)->second;
                     if (book.contains(key)) {
-                        select_book = key;
+                        select_student = key;
                     } else {
                         cout << "Cannot find grade student named \'" << key << "\'\n";
                         return -1;
                     }
-                } catch (out_of_range& e) {
-                    cout << "You must select book first\n";
+                } else {
+                    cout << "You must select section first\n";
                     return -1;
                 }
             } else {
@@ -123,7 +123,7 @@ int gradebook::parse(string line) {
             string grade_str = gradebook::detokenize(tokens, equals + 1);
             try {
                 double grade = stod(grade_str);
-                try {
+                if(books.count(select_book) > 0) {
                     section *sect = &books.find(select_book)->second;
                     try {
                         sect->change_grade(select_student, key, grade);
@@ -131,8 +131,8 @@ int gradebook::parse(string line) {
                         cout << "You must select student first\n";
                         return -1;
                     }
-                } catch (out_of_range& e) {
-                    cout << "You must select book first\n";
+                } else {
+                    cout << "You must select section first\n";
                     return -1;
                 }
             } catch (invalid_argument& e) {
@@ -168,16 +168,13 @@ int gradebook::parse(string line) {
             string fname = gradebook::detokenize(tokens, 2, comma);
             if (tokens.size() > comma + 1) {
                 string lname = gradebook::detokenize(tokens, comma + 1);
-                try {
+                if(books.count(select_book) > 0) {
                     section *sect = &books.find(select_book)->second;
                     sect->add_student(fname, lname);
-                } catch (out_of_range& e) {
-                    cout << "You must select book first (out_of_range)\n";
+                } else {
+                    cout << "You must select section first\n";
                     return -1;
-                } catch (bad_alloc& f) {
-                    cout << "You must select book first (bad_alloc)\n";
-                    return -1;
-                }
+                } 
             } else {
                 cout << "Missing last name\n";
                 return -1;
@@ -192,7 +189,7 @@ int gradebook::parse(string line) {
             if (tokens.size() > 2) {
                 string key = gradebook::detokenize(tokens, 2);
                 if (books.count(key) > 0) {
-                    books.erase(key); //TODO needs a test to say if it was deleted
+                    books.erase(key);
                 } else {
                     cout << "Cannot find section named " << key << endl;
                 }
@@ -203,11 +200,11 @@ int gradebook::parse(string line) {
         } else if (tokens[1] == "student") {
             if (tokens.size() > 2) {
                 string key = gradebook::detokenize(tokens, 2);
-                try {
+                if(books.count(select_book) > 0) {
                     section *sect = &books.find(select_book)->second;
                     sect->expell(key);
-                } catch (out_of_range& e) {
-                    cout << "You must select book first\n";
+                } else {
+                    cout << "You must select section first\n";
                     return -1;
                 }
             } else {
@@ -217,7 +214,7 @@ int gradebook::parse(string line) {
         } else if (tokens[1] == "grade") {
             if (tokens.size() > 2) {
                 string key = gradebook::detokenize(tokens, 2);
-                try {
+                if(books.count(select_book) > 0) {
                     section *sect = &books.find(select_book)->second;
                     if (select_student != "") {
                         try {
@@ -230,8 +227,8 @@ int gradebook::parse(string line) {
                         cout << "You must select student first\n";
                         return -1;
                     }
-                } catch (out_of_range& e) {
-                    cout << "You must select book first\n";
+                } else {
+                    cout << "You must select section first\n";
                     return -1;
                 }
             } else {
@@ -259,15 +256,15 @@ int gradebook::parse(string line) {
         } else if (tokens[1] == "student") {
             if (tokens.size() > 2) {
                 string key = gradebook::detokenize(tokens, 2);
-                try {
+                if(books.count(select_book) > 0) {
                     section sect = books.find(select_book)->second;
                     vector<string> matches = sect.lookup(key);
                     for (string str : matches) {
                         cout << str << "    ";
                     }
                     cout << endl;
-                } catch (out_of_range& e) {
-                    cout << "You must select book first\n";
+                } else {
+                    cout << "You must select section first\n";
                     return -1;
                 }
             } else {
@@ -277,7 +274,7 @@ int gradebook::parse(string line) {
         } else if (tokens[1] == "grade") {
             if (tokens.size() > 2) {
                 string key = gradebook::detokenize(tokens, 2);
-                try {
+                if(books.count(select_book) > 0) {
                     section sect = books.find(select_book)->second;
                     if (sect.contains(select_student)) {
                         student stu = sect.find(select_student);
@@ -290,8 +287,8 @@ int gradebook::parse(string line) {
                         cout << "You must select student first";
                         return -1;
                     }
-                } catch (out_of_range& e) {
-                    cout << "You must select book first\n";
+                } else {
+                    cout << "You must select section first\n";
                     return -1;
                 }
             } else {
@@ -315,7 +312,7 @@ int gradebook::parse(string line) {
             }
             cout << endl;
         } else if (tokens[1] == "students") {
-            try {
+            if (books.count(select_book) > 0) {
                 section *sect = &books.find(select_book)->second;
                 for (auto stu : sect->stu_map()) {
                     if (stu.first == select_book) {
@@ -326,22 +323,20 @@ int gradebook::parse(string line) {
                     }
                 }
                 cout << endl;
-            } catch (out_of_range& e) {
-                cout << "You must select book first\n";
+            } else {
+                cout << "You must select section first\n";
                 return -1;
-            } catch (length_error& f) {
-                cout << "Length error was thrown.";
             }
         } else if (tokens[1] == "grades") {
             if (tokens.size() > 2) {
                 string key = gradebook::detokenize(tokens, 2);
-                try {
+                if( books.count(select_book) > 0) {
                     section *sect = &books.find(select_book)->second;
                     for (auto grade : sect->display_set(key)) {
                         cout << grade.first << " : " << grade.second << endl;
                     }
-                } catch (out_of_range& e) {
-                    cout << "You must select book first\n";
+                } else {
+                    cout << "You must select section first\n";
                     return -1;
                 }
             } else {
@@ -349,17 +344,17 @@ int gradebook::parse(string line) {
                 return -1;
             }
         } else if (tokens[1] == "averages") {
-            try {
-                section sect = books.find(select_book)->second;
-                for (auto stu : sect.stu_map()) {
+            if(books.count(select_book) > 0) {
+                section *sect = &books.find(select_book)->second;
+                for (auto stu : sect->stu_map()) {
                     cout << stu.first << " : " << stu.second.average() << endl;
                 }
-            } catch (out_of_range& e) {
-                cout << "You must select book first\n";
+            } else {
+                cout << "You must select section first\n";
                 return -1;
             }
         } else if (tokens[1] == "portfolio") {
-            try {
+            if(books.count(select_student) > 0) {
                 section *sect = &books.find(select_book)->second;
                 try {
                     cout << sect->to_string(select_student);
@@ -367,16 +362,16 @@ int gradebook::parse(string line) {
                     cout << "You must select student first\n";
                     return -1;
                 }
-            } catch (out_of_range& e) {
-                cout << "You must select book first\n";
+            } else {
+                cout << "You must select section first\n";
                 return -1;
             }
         } else if (tokens[1] == "section") {
-            try {
+            if(books.count(select_book) > 0) {
                 section *sect = &books.find(select_book)->second;
                 cout << sect->to_string();
-            } catch (out_of_range& e) {
-                cout << "You must select book first\n";
+            } else {
+                cout << "You must select section first\n";
                 return -1;
             }
         } else {

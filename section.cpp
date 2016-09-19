@@ -59,7 +59,7 @@ double section::get_grade(string stu_name, string grade_key) const {
 void section::change_grade(string stu_name, string grade_key, double grade) {
     auto stu = students.find(stu_name);
     if(stu != students.end()) {
-        stu->second.change_grade(grade_key, grade);
+        (&stu->second)->change_grade(grade_key, grade);
     }
 }
 
