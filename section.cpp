@@ -142,7 +142,11 @@ string section::to_string() const {
                     << " = " << iter.second;
             first = false;
         } 
-        ret << " ; average: " << stu.average() << "}\n";
+        if(grades.size() > 0) {
+            ret << " ; average: " << stu.average() << "}\n";
+        } else {
+            ret << "average: N/A}\n";
+        }
     }
     return ret.str();
 }
@@ -159,7 +163,11 @@ string section::to_string(string stu_name) const {
                 << " = " << iter.second;
         first = false;
     } 
-    ret << " || average: " << stu.average() << "}\n";
+    if(grades.size() > 0) {
+        ret << " ; average: " << stu.average() << "}\n";
+    } else {
+        ret << "average: N/A}\n";
+    }
     return ret.str();
 }
 

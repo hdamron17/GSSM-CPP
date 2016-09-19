@@ -64,6 +64,9 @@ gradebook::~gradebook() {
 }
 
 int gradebook::parse(string line) {
+    if(line.size() <= 0) {
+        return -1;
+    }
     vector<string> tokens = tokenize(line);
     if (tokens[0] == "help" || tokens[0] == "h") {
         cout << gradebook::HELP;
@@ -71,10 +74,9 @@ int gradebook::parse(string line) {
         if (tokens[1] == "section") {
             if (tokens.size() > 2) {
                 string key = gradebook::detokenize(tokens, 2);
-                try {
-                    books.find(key);
+                if(books.count(key) > 0) {
                     select_book = key;
-                } catch (out_of_range& e) {
+                } else {
                     cout << "Cannot find grade book titled \'" << key << "\'\n";
                     return -1;
                 }
@@ -86,8 +88,8 @@ int gradebook::parse(string line) {
             if (tokens.size() > 2) {
                 string key = gradebook::detokenize(tokens, 2);
                 if(books.count(select_book) > 0) {
-                    section book = books.find(select_book)->second;
-                    if (book.contains(key)) {
+                    section *book = &books.find(select_book)->second;
+                    if (book->contains(key)) {
                         select_student = key;
                     } else {
                         cout << "Cannot find grade student named \'" << key << "\'\n";
@@ -118,7 +120,7 @@ int gradebook::parse(string line) {
             cout << "Error: format name as <key> = <number>\n";
             return -1;
         }
-        string key = gradebook::detokenize(tokens, equals);
+        string key = gradebook::detokenize(tokens, 2, equals);
         if (tokens.size() > equals + 1) {
             string grade_str = gradebook::detokenize(tokens, equals + 1);
             try {
@@ -315,7 +317,7 @@ int gradebook::parse(string line) {
             if (books.count(select_book) > 0) {
                 section *sect = &books.find(select_book)->second;
                 for (auto stu : sect->stu_map()) {
-                    if (stu.first == select_book) {
+                    if (stu.first == select_student) {
                         cout << gradebook::GREEN << stu.first <<
                                 gradebook::RESET << "    ";
                     } else {
@@ -354,7 +356,7 @@ int gradebook::parse(string line) {
                 return -1;
             }
         } else if (tokens[1] == "portfolio") {
-            if(books.count(select_student) > 0) {
+            if(books.count(select_book) > 0) {
                 section *sect = &books.find(select_book)->second;
                 try {
                     cout << sect->to_string(select_student);
