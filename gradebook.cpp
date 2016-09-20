@@ -42,7 +42,7 @@ string gradebook::HELP =
         "                                       -Displays selected section in green\n"
         "     grades <grade key>              Displays single grade for all students\n"
         "     portfolio                       Displays all grades for single student\n"
-        "     section                         Displays everything about current section\n"
+        "     report                          Displays everything about current section\n"
         "  quit                             Quits the program\n"
         "  exit                             Same as quit\n";
 
@@ -406,7 +406,7 @@ int gradebook::parse(string line) {
                     cout << "You must select section first\n";
                     return -1;
                 }
-            } else if (tokens[1] == "section") {
+            } else if (tokens[1] == "report") {
                 if(tokens.size() > 2) {
                     cout << "Invalid parameters after command\n";
                     return -1;
