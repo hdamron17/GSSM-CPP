@@ -19,10 +19,14 @@ string gradebook::HELP =
         "     student <student name>          Selects student\n"
         "  create [option]                  Adds an attribute\n"
         "     section <section name>          Adds section\n"
+        "                                       -selects section if none has been already\n"
         "     student <lname> , <fname>       Adds student to section\n"
+        "                                       -selects student if none has been already\n"
         "     grade <grade key> = <number>    Adds grade to student\n"
+        "                                       -updates grade if it already exists\n"
         "  update [option]                  Changes an attribute\n"
         "     grade <grade key> = <number>    Changes grade for student\n"
+        "                                       -adds grade if it does not yet exist\n"
         "  drop [option]                    Deletes an attribute\n"
         "     section                         Deletes section\n"
         "     student                         Deletes student\n"
@@ -158,11 +162,14 @@ int gradebook::parse(string line) {
 
         } else if (tokens[0] == "create") {
             if (tokens[1] == "section") {
-                try {
+                if(tokens.size() > 2) {
                     string key = gradebook::detokenize(tokens, 2);
                     section temp(key);
                     books.insert({key, temp});
-                } catch (out_of_range& e) {
+                    if(select_book == "") {
+                        select_book = key;
+                    }
+                } else {
                     cout << "Missing gradebook name\n";
                     return -1;
                 }
@@ -183,6 +190,9 @@ int gradebook::parse(string line) {
                     if (books.count(select_book) > 0) {
                         section *sect = &books.find(select_book)->second;
                         sect->add_student(fname, lname);
+                        if(select_student == "") {
+                            select_student = fname + " " + lname;
+                        }
                     } else {
                         cout << "You must select section first\n";
                         return -1;
@@ -202,6 +212,7 @@ int gradebook::parse(string line) {
                     string key = gradebook::detokenize(tokens, 2);
                     if (books.count(key) > 0) {
                         books.erase(key);
+                        select_book = "";
                     } else {
                         cout << "Cannot find section named " << key << endl;
                     }
@@ -215,6 +226,7 @@ int gradebook::parse(string line) {
                     if (books.count(select_book) > 0) {
                         section *sect = &books.find(select_book)->second;
                         sect->expell(key);
+                        select_student = "";
                     } else {
                         cout << "You must select section first\n";
                         return -1;
@@ -315,6 +327,10 @@ int gradebook::parse(string line) {
         } else if (tokens[0] == "show") {
             if (tokens[1] == "sections") {
                 for (auto sect : books) {
+                    if(tokens.size() > 2) {
+                        cout << "Invalid parameters after command\n";
+                        return -1;
+                    }
                     if (sect.first == select_book) {
                         cout << gradebook::GREEN << sect.first <<
                                 gradebook::RESET << "    ";
@@ -324,6 +340,10 @@ int gradebook::parse(string line) {
                 }
                 cout << endl;
             } else if (tokens[1] == "students") {
+                if(tokens.size() > 2) {
+                    cout << "Invalid parameters after command\n";
+                    return -1;
+                }
                 if (books.count(select_book) > 0) {
                     section *sect = &books.find(select_book)->second;
                     for (auto stu : sect->stu_map()) {
@@ -356,6 +376,10 @@ int gradebook::parse(string line) {
                     return -1;
                 }
             } else if (tokens[1] == "averages") {
+                if(tokens.size() > 2) {
+                    cout << "Invalid parameters after command\n";
+                    return -1;
+                }
                 if (books.count(select_book) > 0) {
                     section *sect = &books.find(select_book)->second;
                     for (auto stu : sect->stu_map()) {
@@ -366,6 +390,10 @@ int gradebook::parse(string line) {
                     return -1;
                 }
             } else if (tokens[1] == "portfolio") {
+                if(tokens.size() > 2) {
+                    cout << "Invalid parameters after command\n";
+                    return -1;
+                }
                 if (books.count(select_book) > 0) {
                     section *sect = &books.find(select_book)->second;
                     if (sect->contains(select_student)) {
@@ -379,6 +407,10 @@ int gradebook::parse(string line) {
                     return -1;
                 }
             } else if (tokens[1] == "section") {
+                if(tokens.size() > 2) {
+                    cout << "Invalid parameters after command\n";
+                    return -1;
+                }
                 if (books.count(select_book) > 0) {
                     section *sect = &books.find(select_book)->second;
                     cout << sect->to_string();
