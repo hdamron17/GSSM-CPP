@@ -1,0 +1,98 @@
+.TH GRADEBOOK 1 2016-09-21 HDamron Gradebook-2.0 User Manual
+.SH NAME
+gradebook \- SQL-like database system for logging student grades
+.SH SYNOPSIS
+.B gradebook \fR[options not accepted]
+.SH DESCRIPTION
+.B gradebook
+allows teacher to manage multiple sections of students with individual grades. This program runs its own shell with SQL-like syntax. Usage instructions are located below. A help message is always available by typing commands help, h, or ?
+.SH GRADEBOOK OPTIONS
+.B gradebook
+does not accept any command line arguments because all are done inside the \fBgradebook\fR shell. The commands inputted to the \fBgradebook\fR shell are found in the COMMANDS section
+.SH GRADEBOOK COMMANDS
+.TP
+.B help, h, ?
+Displays this message. 
+.TP
+.B select section \fR<\fIsection name\fR>
+Selects section so that all future actions are applied to this student. 
+.TP
+.B select student \fR<\fIstudent name\fR>
+Selects student contained in currently selected section so that all future actions are applied to this student. Note that the comma included in creating the student is not included here.
+.TP
+.B create section \fR<\fIsection name\fR>
+Adds section called \fsection name\fR (selects section if none has been already). 
+.TP
+.B create student \fR<\fIfname\fR> , <\fIlname\fR>
+Adds student to section and calls the new student \fIfname lname\fR (selects student if none has been already). 
+.TP
+.B create grade \fR<\fIgrade key\fR> = <\fInumber\fR>
+Adds grade to student (updates grade if it already exists). All grades for a single student are stored in a map so that each grade has a name which must be used to retrieve it. This name is the \fIgrade key\R. \fInumber\fR must be a floating point numerical value.
+.TP
+.B update grade \fR<\fIgrade key\fI> = <\fInumber\fI>
+Changes grade for student (adds grade if it does not yet exist). Because it creates the grade if it does not exist, this command is the same as "create grade".
+.TP
+.B drop section
+Deletes currently selected section and deselects both section and student, both of which no longer exist. 
+.TP
+.B drop student
+Deletes currently selected student and deselects student, which should not exist. 
+.TP
+.B drop grade <grade key>
+Deletes grade called \fIgrade key\fR from currently selected student. 
+.TP
+.B lookup section \fR<\fIkeyword\fR>
+Searches sections and shows names of all section names which contain \fIkeyword\fR. 
+.TP
+.B lookup student \fR<\fIkeyword\fR>
+Searches students in currently selected section and shows names of all student names which contain \fIkeyword\fR. 
+.TP
+.B lookup grade \fR<\fIgrade key\fR> 
+Searches grades of currently selected student and shows names of all grade keys which contain \fIgrade key\fR. 
+.TP
+.B show sections
+Lists names of all sections (Displays selected section in green). 
+.TP
+.B show students
+Lists names of all students in selected section (Displays selected section in green). 
+.TP
+.B show grades \fR<\fIgrade key\fR>
+Displays the grade called \fIgrade key\fR for all students who have a grade with that key (does not include students who do not contain the specified grade). 
+.TP
+.B show portfolio
+Displays all grades and the grade average for currently selected student. 
+.TP
+.B show report
+Displays portfolios for all students in currently selected section. 
+.TP
+.B quit, exit
+Quits the program. 
+.SH EXAMPLES
+.TP
+.B create section \fRComp Sci 101
+Creates a new section called "Comp Sci 101" and selects it if no section is currently selected. 
+.TP
+.B select section \fRPhysics
+Selects section called "Physics" if it exists so all actions are applied on this section instead of the previously selected section. 
+.TP
+.B create student \fRBrennan , Cain
+Creates a new student called "Brennan Cain", adds it to the currently selected section (which must be created first), and selects the new student if no section is currently selected. 
+.TP
+.B select section \fRBrennan Cain
+Selects student called "Brennan Cain" if it exists so all actions are applied on this student instead of the previously selected section. 
+.TP
+.B update grade \fRTest 1 = 95
+Creates a grade called "Test 1" for selected student and fills it with grade 95. 
+.TP
+.B drop section
+Drops currently selected section (most recently selected)
+.TP
+.B lookup student \fRrenn
+Displays the names of all students whose names contain the keyword "renn"
+.TP
+.B show portfolio
+Shows the portfolio of currently selected student. Should look similar to the following:
+Brennan Cain {Homework = 82 | Test 1 = 88 | Test 2 = 93 | Test 3 = 97 ; average: 90}
+.TP show report
+Shows a list of portfolios like the one above, one for each student
+

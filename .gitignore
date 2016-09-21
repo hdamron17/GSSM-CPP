@@ -9,5 +9,10 @@ nbproject/
 *.o
 *.o.d
 
+<<<<<<< HEAD
 ##### Compressed Versions
 *.tar.gz
+=======
+##### Image Files
+*.png
+>>>>>>> mission-impossible
