@@ -211,6 +211,7 @@ int gradebook::parse(string line) {
                     if (books.count(key) > 0) {
                         books.erase(key);
                         select_book = "";
+                        select_student = "";
                     } else {
                         cout << "Cannot find section named " << key << endl;
                     }
