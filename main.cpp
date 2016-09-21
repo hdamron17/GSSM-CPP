@@ -1,7 +1,7 @@
 /* 
  * Main function of Gradebook project: creates and modifies gradebook instance
  * File:   main.cpp
- * Author: hdamron1594
+ * Author: Hunter Damron
  *
  * Created on September 5, 2016, 10:29 AM
  */
@@ -13,7 +13,8 @@
 using namespace std;
 
 /* 
- * Calls user interface loop within gradebook
+ * Main function calls user interface loop within gradebook
+ * @return Returns the return value from gradebook::run()
  */
 int main(int argc, char** argv) {
     

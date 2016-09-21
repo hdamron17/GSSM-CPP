@@ -91,7 +91,8 @@ public:
     static vector<string> tokenize(string); //tokenizes string; delimiter=" "
     static vector<string> tokenize(string, string); //tokenizes string
     static string detokenize(vector<string>, int); //puts vector back together
-    static string detokenize(vector<string>, int, int); //uses end = tokens.size())
+    static string detokenize(vector<string>, int, int); //puts vector back together
+    static string detokenize(vector<string>, int, int, string); //uses end = tokens.size())
     
     static int run(); //static main for gradebook class
     

@@ -1,7 +1,7 @@
 /* 
  * Gradebook class: holds multiple sections and has UI loop (unfinished)
  * File:   gradebook.cpp
- * Author: hdamron1594
+ * Author: Hunter Damron
  * 
  * Created on September 9, 2016, 10:18 PM
  */
@@ -63,9 +63,19 @@ gradebook::gradebook() {
     terminate = false;
 }
 
+/**
+ * Default destructor
+ */
 gradebook::~gradebook() {
 }
 
+/**
+ * Parses user input according to the rules defined in the help message and the 
+ *      command's man page
+ * @param line String containing user input
+ * @return Returns 0 if function runs properly else -1
+ *      (prints the error to cout if it returns -1)
+ */
 int gradebook::parse(string line) {
     if (line.size() <= 0) {
         return 0;
@@ -430,10 +440,19 @@ int gradebook::parse(string line) {
     return 0;
 }
 
+/**
+ * Determines if the loop in gradebook::run() is ready to terminate
+ * @return Returns true if it is ready to terminate else false
+ */
 bool gradebook::term() const {
     return terminate;
 }
 
+/**
+ * Looks up sections whose names contain the keyword
+ * @param keyword Keyword to matched in section names
+ * @return Returns a vector of valid section names which contain keyword
+ */
 vector<string> gradebook::lookup(string keyword) const {
     vector<string> matches;
     for (auto iter : books) {
@@ -444,10 +463,21 @@ vector<string> gradebook::lookup(string keyword) const {
     return matches;
 }
 
+/**
+ * Calls gradebook::tokenize(string, string) using " " as delimiter
+ * @param str String to be split into tokens
+ * @return Returns vector containing string tokens
+ */
 vector<string> gradebook::tokenize(string str) {
     return tokenize(str, " ");
 }
 
+/**
+ * Tokenizes one string into a vector of strings
+ * @param str String to be tokenized
+ * @param delimiter String describing location of split between tokens
+ * @return Returns vector containing string tokens
+ */
 vector<string> gradebook::tokenize(string str, string delimiter) {
     vector<string> tokens;
     int start = 0;
@@ -463,21 +493,51 @@ vector<string> gradebook::tokenize(string str, string delimiter) {
     return tokens;
 }
 
+/**
+ * Detokenizes vector of strings by concatenating with spaces as the delimiter
+ * @param tokens Vector of strings to be combined into one
+ * @param begin Beginning index in vector to be included in new string
+ * @return Returns a single string containing recombined string
+ */
 string gradebook::detokenize(vector<string> tokens, int begin) {
-    return gradebook::detokenize(tokens, begin, tokens.size());
+    return gradebook::detokenize(tokens, begin, tokens.size(), " ");
 }
 
+/**
+ * Detokenizes vector of strings by concatenating with " " as delimiter
+ * @param tokens Vector of strings to be combined into one
+ * @param begin Beginning index in vector to be included in new string
+ * @param end Last index to be included plus 1
+ * @return Returns a single string containing recombined string
+ */
 string gradebook::detokenize(vector<string> tokens, int begin, int end) {
+    return gradebook::detokenize(tokens, begin, end, " ");
+}
+
+/**
+ * Detokenizes vector of strings by concatenating with delimiter within a range
+ * @param tokens Vector of strings to be combined into one
+ * @param begin Index of first index to be included in new string
+ * @param end Last index to be included plus 1
+ * @param delimiter String to be placed between tokens in new string
+ * @return Returns a single string containing recombined string
+ */
+string gradebook::detokenize(vector<string> tokens, int begin, int end, 
+                                                            string delimiter) {
     if (begin > end - 1 || begin < 0) {
         throw out_of_range("Beginning index is not in vector");
     }
     string together = tokens[begin];
     for (int i = begin + 1; i < end; i++) {
-        together = together + " " + tokens[i];
+        together = together + delimiter + tokens[i];
     }
     return together;
 }
 
+/**
+ * Main looping function of gradebook project (called from main.cpp)
+ * @return Returns exit status (hopefully 0 because exceptions are handled)
+ */
 int gradebook::run() {
     gradebook main_loop;
     string input = "";
