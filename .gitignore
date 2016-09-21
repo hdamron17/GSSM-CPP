@@ -9,3 +9,6 @@ nbproject/
 ##### C++ Object Files
 *.o
 *.o.d
+
+##### Image Files
+*.png
