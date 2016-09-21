@@ -12,8 +12,7 @@
 string gradebook::HELP =
         "Gradebook, version 1.0\n"
         "Usage:\n"
-        "  help                             Displays this message\n"
-        "  h                                Same as help\n"
+        "  help, h, ?                       Displays this message\n"
         "  select [option]                  Selects defaults\n"
         "     section <section name>          Selects section\n"
         "     student <student name>          Selects student\n"
@@ -43,8 +42,7 @@ string gradebook::HELP =
         "     grades <grade key>              Displays single grade for all students\n"
         "     portfolio                       Displays all grades for single student\n"
         "     report                          Displays everything about current section\n"
-        "  quit                             Quits the program\n"
-        "  exit                             Same as quit\n";
+        "  quit, exit                         Quits the program\n";
 
 string gradebook::WELCOME =
         "Welcome to Gradebook, version 1.0\n"
