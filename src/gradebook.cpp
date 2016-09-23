@@ -560,14 +560,17 @@ int gradebook::run(int argc, char** argv) {
             return -1;
         }
         ifstream infile(file, ios::in);
-        if(! infile) {
-            cout << "Could not load the file\n";
-        }
-        while(! infile.eof()) {
-            getline(infile, input);
-            main_loop.parse(input);
-        }
-        main_loop.deselect();
+        if(infile) {
+            while(! infile.eof()) {
+                getline(infile, input);
+                int ret = main_loop.parse(input) != 0;
+                if(ret != 0) {
+                    cout << "Could not parse " << file <<". Process exiting.\n";
+                    return ret;
+                }
+            }
+            main_loop.deselect();
+        } //does not need to do anything yet if file does not exist
     } else if (argc > 2) {
         cout << "Too many arguments\n";
         return -1;
