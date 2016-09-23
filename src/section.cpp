@@ -154,11 +154,6 @@ void section::add_student(string fname, string lname) {
         return; //Does not modify student if he/she already exists
     }
     student temp(fname, lname);
-<<<<<<< HEAD:section.cpp
-    students[fname + " " + lname] = temp;
-}
-
-=======
     students.insert(make_pair(fname + " " + lname, temp));
 }
 
@@ -167,7 +162,6 @@ void section::add_student(string fname, string lname) {
  * @return Returns map of string to double containing student names mapped to 
  *      grade averages
  */
->>>>>>> mission-impossible:src/section.cpp
 map<string, double> section::all_averages() const {
     map<string, double> disp; //maps name to grade average
     for(auto iter : students) {
@@ -265,11 +259,6 @@ string section::to_string(string stu_name) const {
     return ret.str();
 }
 
-<<<<<<< HEAD:section.cpp
-map<string, student> section::stu_map() const {
-    return students;
-}
-=======
 /**
  * Gets a map of students to reveal all of the section's students
  * @return Returns map of string to student containing name mapped to 
@@ -278,5 +267,3 @@ map<string, student> section::stu_map() const {
 map<string, student> section::stu_map() const {
     return students;
 }
-
->>>>>>> mission-impossible:src/section.cpp
