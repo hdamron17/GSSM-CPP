@@ -94,7 +94,7 @@ public:
     static string detokenize(vector<string>, int, int); //puts vector back together
     static string detokenize(vector<string>, int, int, string); //uses end = tokens.size())
     
-    static int run(); //static main for gradebook class
+    static int run(int, char**); //static main for gradebook class
     
     static string HELP;
     static string WELCOME;
@@ -108,6 +108,7 @@ private:
     //accessors
     bool term() const; //returns true if it is ready to terminate looping
     vector<string> lookup(string) const; //looks up books
+    void deselect(); //deselects section and student
     
     //mutators
     int parse(string); //parses and executes string command

@@ -1,0 +1,8 @@
+create section Test Section
+create student Brennan , Cain
+create student Hunter , Damron
+create grade Grade 1 = 88
+create grade Grade 2 = 97
+select student Hunter Damron
+create grade Grade 1 = 93
+create grade Grade 2 = 95

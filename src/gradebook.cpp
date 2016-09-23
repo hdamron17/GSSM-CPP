@@ -7,6 +7,8 @@
  */
 
 #include <iostream>
+#include <fstream>
+#include <cstdlib>
 #include "gradebook.h"
 
 string gradebook::HELP =
@@ -449,6 +451,14 @@ bool gradebook::term() const {
 }
 
 /**
+ * Deselects both section and student
+ */
+void gradebook::deselect() {
+    select_book = "";
+    select_student = "";
+}
+
+/**
  * Looks up sections whose names contain the keyword
  * @param keyword Keyword to matched in section names
  * @return Returns a vector of valid section names which contain keyword
@@ -536,11 +546,33 @@ string gradebook::detokenize(vector<string> tokens, int begin, int end,
 
 /**
  * Main looping function of gradebook project (called from main.cpp)
- * @return Returns exit status (hopefully 0 because exceptions are handled)
+ * Accepts filename for reading or saving file
+ * @return Returns exit status
  */
-int gradebook::run() {
+int gradebook::run(int argc, char** argv) {
+    string file;
     gradebook main_loop;
     string input = "";
+    if(argc == 2) {
+        file = argv[1];
+        if(file.find(".gql", file.length()-4) == string::npos) {
+            cout << "Invalid file extension\n";
+            return -1;
+        }
+        ifstream infile(file, ios::in);
+        if(! infile) {
+            cout << "Could not load the file\n";
+        }
+        while(! infile.eof()) {
+            getline(infile, input);
+            main_loop.parse(input);
+        }
+        main_loop.deselect();
+    } else if (argc > 2) {
+        cout << "Too many arguments\n";
+        return -1;
+    }
+    
     cout << gradebook::WELCOME << endl;
     do {
         cout << gradebook::PROMPT;
