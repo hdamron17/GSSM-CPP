@@ -473,6 +473,10 @@ vector<string> gradebook::lookup(string keyword) const {
     return matches;
 }
 
+void gradebook::save_state(ofstream *outfile) {
+    (*outfile) << "TODO Output save state\n";
+}
+
 /**
  * Calls gradebook::tokenize(string, string) using " " as delimiter
  * @param str String to be split into tokens
@@ -582,4 +586,17 @@ int gradebook::run(int argc, char** argv) {
         getline(cin, input);
         main_loop.parse(input);
     } while (!main_loop.term());
+    
+    if(argc == 2) {
+        file = argv[1];
+        
+        if(file.find(".gql", file.length()-4) == string::npos) {
+            cout << "Invalid file extension\n";
+            return -1;
+        }
+        ofstream outfile(file, ios::out);
+        if(outfile) {
+            main_loop.save_state(&outfile);
+        }
+    }
 }

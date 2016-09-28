@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <fstream>
 
 using namespace std;
 
@@ -112,6 +113,7 @@ private:
     
     //mutators
     int parse(string); //parses and executes string command
+    void save_state(ofstream*);
     
     map<string, section> books;
     string select_book;
