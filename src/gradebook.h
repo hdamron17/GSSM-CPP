@@ -113,7 +113,7 @@ private:
     
     //mutators
     int parse(string); //parses and executes string command
-    void save_state(ofstream*);
+    void save_state(ostream*);
     
     map<string, section> books;
     string select_book;

@@ -473,8 +473,20 @@ vector<string> gradebook::lookup(string keyword) const {
     return matches;
 }
 
-void gradebook::save_state(ofstream *outfile) {
-    (*outfile) << "TODO Output save state\n";
+void gradebook::save_state(ostream *outfile) {
+    for(auto sect : books) {
+        (*outfile) << "create section " << sect.first << endl
+                        << "select section " << sect.first << endl;
+        for(auto stu : sect.second.stu_map()) {
+            (*outfile) << "create student " << stu.second.get_first_name()
+                        << " , " << stu.second.get_last_name() << endl
+                        << "select student " << stu.second.get_name() << endl;
+            for(auto grade : stu.second.get_grades()) {
+                (*outfile) << "create grade " << grade.first << " = " 
+                        << grade.second << endl;
+            }
+        }
+    }
 }
 
 /**
@@ -570,11 +582,13 @@ int gradebook::run(int argc, char** argv) {
                 int ret = main_loop.parse(input) != 0;
                 if(ret != 0) {
                     cout << "Could not parse " << file <<". Process exiting.\n";
+                    infile.close();
                     return ret;
                 }
             }
             main_loop.deselect();
         } //does not need to do anything yet if file does not exist
+        infile.close();
     } else if (argc > 2) {
         cout << "Too many arguments\n";
         return -1;
@@ -595,8 +609,13 @@ int gradebook::run(int argc, char** argv) {
             return -1;
         }
         ofstream outfile(file, ios::out);
-        if(outfile) {
+        if(!outfile) {
             main_loop.save_state(&outfile);
+        } else {
+            cout << "Unable to save file. Dumping to command line instead:\n"
+                 << "\"\"\"\n";
+            main_loop.save_state(&cout);
+            cout << "\"\"\"\n";
         }
     }
 }
