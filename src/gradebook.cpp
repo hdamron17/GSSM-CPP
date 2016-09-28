@@ -609,7 +609,7 @@ int gradebook::run(int argc, char** argv) {
             return -1;
         }
         ofstream outfile(file, ios::out);
-        if(!outfile) {
+        if(outfile) {
             main_loop.save_state(&outfile);
         } else {
             cout << "Unable to save file. Dumping to command line instead:\n"
