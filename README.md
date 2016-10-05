@@ -12,7 +12,7 @@ Gradebook-2.0 is a command line tool designed to help teachers help students. It
 
 To run project main, execute the following from project root:
 
-  ./dist/Debug/GNU-Linux/gradebook-2.0
+  ./dist/Debug/GNU-Linux/gradebook-2.0 [path_to_save_file]
 
 To view the Gradebook User Manual, execute the following from project root:
 

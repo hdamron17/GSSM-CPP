@@ -1,8 +1,9 @@
-.TH GRADEBOOK 1 2016-09-21 HDamron Gradebook-2.0 User Manual
+.TH GRADEBOOK 1 2016-09-28 HDamron Gradebook-2.0 User Manual
 .SH NAME
 gradebook \- SQL-like database system for logging student grades
 .SH SYNOPSIS
-.B gradebook \fR[options not accepted]
+.B gradebook \fR[path to save file]
+Begins gradebook program, loading data from save file and saving the final values back to that file. File must have .gql extension and have SQL-style syntax in that they contain commands to reach the desired state of the program.
 .SH DESCRIPTION
 .B gradebook
 allows teacher to manage multiple sections of students with individual grades. This program runs its own shell with SQL-like syntax. Usage instructions are located below. A help message is always available by typing commands help, h, or ?
