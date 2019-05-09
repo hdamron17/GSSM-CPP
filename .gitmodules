@@ -1,0 +1,6 @@
+[submodule "SIMPLE-Compiler"]
+	path = SIMPLE-Compiler
+	url = git@github.com:hdamron17/SIMPLE-Compiler.git
+[submodule "SML-VM"]
+	path = SML-VM
+	url = git@github.com:hdamron17/SML-Interpreter.git
